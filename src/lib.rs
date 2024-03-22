@@ -12,5 +12,5 @@
 //         assert_eq!(result, 4);
 //     }
 // }
-
+#![no_std]
 pub mod register;
