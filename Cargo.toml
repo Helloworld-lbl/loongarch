@@ -9,3 +9,6 @@ edition = "2021"
 bitflags = "1.0"
 bit_field = "0.10.0"
 log = "0.4"
+
+[features]
+inline_asm = []
