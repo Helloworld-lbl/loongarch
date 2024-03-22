@@ -12,4 +12,4 @@ bit_field = "0.10.0"
 log = "0.4"
 
 [features]
-inline_asm = []
+inline-asm = []
