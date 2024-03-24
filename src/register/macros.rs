@@ -4,14 +4,14 @@ macro_rules! read_csr {
         #[inline]
         unsafe fn _read() -> usize {
             match () {
-                #[cfg(all(loongarch, feature = "inline-asm"))]
+                #[cfg(all(feature = "inline-asm"))]
                 () => {
                     let r: usize;
                     core::arch::asm!("csrrd {0}, {1}", out(reg) r, const $csr_number);
                     r
                 }
 
-                #[cfg(all(loongarch, not(feature = "inline-asm")))]
+                #[cfg(all(not(feature = "inline-asm")))]
                 () => {
                     extern "C" {
                         fn $asm_fn() -> usize;
@@ -19,9 +19,6 @@ macro_rules! read_csr {
 
                     $asm_fn()
                 }
-
-                #[cfg(not(loongarch))]
-                () => unimplemented!(),
             }
         }
     };
@@ -112,9 +109,6 @@ macro_rules! write_csr {
 
                     $asm_fn(bits);
                 }
-
-                #[cfg(not(loongarch))]
-                () => unimplemented!(),
             }
         }
     };
