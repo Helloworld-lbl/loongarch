@@ -65,4 +65,4 @@ impl Prmd {
 }
 
 read_csr_as!(Prmd, 0x1, __read_sstatus);
-write_csr_as_usize!(0x1, __write_sstatus);
+write_csr!(0x1, __write_sstatus);
