@@ -101,10 +101,10 @@ macro_rules! write_csr {
         #[allow(unused_variables)]
         unsafe fn _write(bits: usize) {
             match () {
-                #[cfg(all(loongarch, feature = "inline-asm"))]
+                #[cfg(all(feature = "inline-asm"))]
                 () => core::arch::asm!("csrwr {0}, {1}", in(reg) bits, const $csr_number),
 
-                #[cfg(all(loongarch, not(feature = "inline-asm")))]
+                #[cfg(all(not(feature = "inline-asm")))]
                 () => {
                     extern "C" {
                         fn $asm_fn(bits: usize);
