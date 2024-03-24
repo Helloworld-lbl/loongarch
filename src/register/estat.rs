@@ -9,27 +9,27 @@ pub struct Estat {
     bits: usize,
 }
 
-// /// Trap Cause
-// #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-// pub enum Trap {
-//     Interrupt(Interrupt),
-//     Exception(Exception),
-// }
+/// Trap Cause
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+pub enum Trap {
+    Interrupt(Interrupt),
+    Exception(Exception),
+}
 
-// /// Interrupt
-// #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-// pub enum Interrupt {
-//     UserSoft,
-//     VirtualSupervisorSoft,
-//     SupervisorSoft,
-//     UserTimer,
-//     VirtualSupervisorTimer,
-//     SupervisorTimer,
-//     UserExternal,
-//     VirtualSupervisorExternal,
-//     SupervisorExternal,
-//     Unknown,
-// }
+/// Interrupt
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+pub enum Interrupt {
+    UserSoft,
+    VirtualSupervisorSoft,
+    SupervisorSoft,
+    UserTimer,
+    VirtualSupervisorTimer,
+    SupervisorTimer,
+    UserExternal,
+    VirtualSupervisorExternal,
+    SupervisorExternal,
+    Unknown,
+}
 
 /// Exception
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
@@ -175,8 +175,8 @@ impl Estat {
 
     /// Trap Cause
     #[inline]
-    pub fn cause(&self) -> Exception {
-        Exception::from(self.ecode(), self.esubcode())
+    pub fn cause(&self) -> Trap {
+        Trap::Exception(Exception::from(self.ecode(), self.esubcode()))
     }
 
     // /// Is trap cause an interrupt.
