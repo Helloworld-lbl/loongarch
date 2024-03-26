@@ -20,3 +20,5 @@ extern crate bitflags;
 extern crate bit_field;
 
 pub mod register;
+pub mod consts;
+pub mod ipi;
