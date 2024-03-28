@@ -19,15 +19,19 @@ pub enum Trap {
 /// Interrupt
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub enum Interrupt {
-    UserSoft,
-    VirtualSupervisorSoft,
-    SupervisorSoft,
-    UserTimer,
-    VirtualSupervisorTimer,
-    SupervisorTimer,
-    UserExternal,
-    VirtualSupervisorExternal,
-    SupervisorExternal,
+    SWI0,
+    SWI1,
+    HWI0,
+    HWI1,
+    HWI2,
+    HWI3,
+    HWI4,
+    HWI5,
+    HWI6,
+    HWI7,
+    PMI,
+    TI,
+    IPI,
     Unknown,
 }
 
@@ -66,22 +70,31 @@ pub enum Exception {
     Unknown,
 }
 
-// impl Interrupt {
-//     pub fn from(nr: usize) -> Self {
-//         match nr {
-//             0 => Interrupt::UserSoft,
-//             1 => Interrupt::SupervisorSoft,
-//             2 => Interrupt::VirtualSupervisorSoft,
-//             4 => Interrupt::UserTimer,
-//             5 => Interrupt::SupervisorTimer,
-//             6 => Interrupt::VirtualSupervisorTimer,
-//             8 => Interrupt::UserExternal,
-//             9 => Interrupt::SupervisorExternal,
-//             10 => Interrupt::VirtualSupervisorExternal,
-//             _ => Interrupt::Unknown,
-//         }
-//     }
-// }
+impl Interrupt {
+    pub fn frombits(n: usize) -> Self {
+        let nr = highbit(n);
+        return Interrupt::from(nr);
+    }
+
+    pub fn from(nr: usize) -> Self {
+        match nr {
+            0b1 => Interrupt::SWI0,
+            0b10 => Interrupt::SWI1,
+            0b100 => Interrupt::HWI0,
+            0b1000 => Interrupt::HWI1,
+            0b10000 => Interrupt::HWI2,
+            0b100000 => Interrupt::HWI3,
+            0b1000000 => Interrupt::HWI4,
+            0b10000000 => Interrupt::HWI5,
+            0b100000000 => Interrupt::HWI6,
+            0b1000000000 => Interrupt::HWI7,
+            0b10000000000 => Interrupt::PMI,
+            0b100000000000 => Interrupt::TI,
+            0b1000000000000 => Interrupt::IPI,
+            _ => Interrupt::Unknown,
+        }
+    }
+}
 
 impl Exception {
     pub fn from(Ecode: usize, EsubCode: usize) -> Self {
@@ -148,13 +161,18 @@ impl Estat {
     }
 
     #[inline]
-    pub fn is_rw(&self) -> usize {
+    pub fn is_s(&self) -> usize {
         self.bits.get_bits(0..2)
     }
 
     #[inline]
-    pub fn is_r(&self) -> usize {
+    pub fn is_h(&self) -> usize {
         self.bits.get_bits(2..13)
+    }
+
+    #[inline]
+    pub fn is(&self) -> usize {
+        self.bits.get_bits(0..13)
     }
 
     #[inline]
@@ -176,20 +194,60 @@ impl Estat {
     /// Trap Cause
     #[inline]
     pub fn cause(&self) -> Trap {
-        Trap::Exception(Exception::from(self.ecode(), self.esubcode()))
+        if self.is_interrupt() {
+            Trap::Interrupt(Interrupt::frombits(self.is()))
+        } else {
+            Trap::Exception(Exception::from(self.ecode(), self.esubcode()))
+        }
     }
 
-    // /// Is trap cause an interrupt.
-    // #[inline]
-    // pub fn is_interrupt(&self) -> bool {
-    //     self.bits.get_bit(size_of::<usize>() * 8 - 1)
-    // }
+    /// Is trap cause an interrupt.
+    pub fn is_interrupt(&self) -> bool {
+        let bits = self.is();
+        let highbit = highbit(bits);
+        match highbit {
+            0 => false,
+            _ => true,
+        }
+    }
 
-    // /// Is trap cause an exception.
-    // #[inline]
-    // pub fn is_exception(&self) -> bool {
-    //     !self.is_interrupt()
-    // }
+    /// Is trap cause a hardware interrupt.
+    #[inline]
+    pub fn is_hwi(&self) -> bool {
+        let bits = self.is_h();
+        let highbit = highbit(bits);
+        match highbit {
+            0 => false,
+            _ => true,
+        }
+    }
+
+    /// Is trap cause a software interrupt.
+    #[inline]
+    pub fn is_swi(&self) -> bool {
+        let bits = self.is_s();
+        let highbit = highbit(bits);
+        match highbit {
+            0 => false,
+            _ => true,
+        }
+    }
+
+    /// Is trap cause an exception.
+    #[inline]
+    pub fn is_exception(&self) -> bool {
+        !(self.is_hwi() || self.is_swi())
+    }
+}
+
+fn highbit(n: usize) -> usize {
+    let mut n = n as isize;
+    let mut res = 0;
+    while n > 0 {
+        res = n & -n;
+        n -= res;
+    }
+    res as usize
 }
 
 read_csr_as!(Estat, 0x5, __read_scause);

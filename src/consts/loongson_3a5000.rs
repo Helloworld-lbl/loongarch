@@ -21,3 +21,6 @@ pub const IOCSR_IPI_SEND_BLOCKING: u32 = 1 << 31;
 pub const LOONGARCH_IOCSR_MBUF_SEND: usize = 0x1048;
 pub const IOCSR_MBUF_SEND_BLOCKING: u64 = 1 << 31;
 pub const IOCSR_MBUF_SEND_BOX_SHIFT: usize = 2;
+
+// TCFG
+pub const TCFG_INITVAL_LEN: usize = 47;
