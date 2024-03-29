@@ -61,11 +61,11 @@ impl Tcfg {
     }
 
     #[inline]
-    pub unsafe fn write(&self) {
-        _write(self.bits);
+    pub fn write(&self) {
+        unsafe { _write(self.bits); }
     }
 
-    pub unsafe fn init_trigger(&mut self, initval: usize) {
+    pub fn init_trigger(&mut self, initval: usize) {
         self.set_periodic();
         self.set_initval(initval >> 2);
         self.set_en();

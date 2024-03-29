@@ -5,6 +5,7 @@ use bit_field::BitField;
 pub struct Cpucfg {}
 
 impl Cpucfg {
+    
     #[inline]
     unsafe fn read(word: usize) -> usize {
         match () {
@@ -27,21 +28,22 @@ impl Cpucfg {
     }
 
     #[inline]
-    pub unsafe fn get_cc_freq() -> usize {
-        Self::read(4)
+    pub fn get_cc_freq() -> usize {
+        unsafe { Self::read(4) }
     }
 
     #[inline]
-    pub unsafe fn get_cc_mul() -> usize {
-        Self::read(5).get_bits(0..16) as usize
+    pub fn get_cc_mul() -> usize {
+        unsafe { Self::read(5).get_bits(0..16) as usize }
     }
 
     #[inline]
-    pub unsafe fn get_cc_div() -> usize {
-        Self::read(5).get_bits(16..32) as usize
+    pub fn get_cc_div() -> usize {
+        unsafe { Self::read(5).get_bits(16..32) as usize }
     }
 
-    pub unsafe fn get_sc_freq() -> usize {
+    #[inline]
+    pub fn get_sc_freq() -> usize {
         Self::get_cc_freq() * Self::get_cc_mul() / Self::get_cc_div()
     }
 }

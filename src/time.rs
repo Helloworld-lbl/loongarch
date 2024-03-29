@@ -1,29 +1,29 @@
 use crate::register::{tcfg, cpucfg::Cpucfg};
 
-pub unsafe fn init_trigger(ticks_per_sec: usize) {
+pub fn init_trigger(ticks_per_sec: usize) {
     let stable_counter_freq = Cpucfg::get_sc_freq();
     let trigger_freq = stable_counter_freq / ticks_per_sec;
     let mut tcfg = tcfg::read();
     tcfg.init_trigger(trigger_freq);
 }
 
-pub unsafe fn get_time_s() -> usize {
+pub fn get_time_s() -> usize {
     let stable_counter_freq = Cpucfg::get_sc_freq();
     get_time() / stable_counter_freq
 }
 
-pub unsafe fn get_time_ms() -> usize {
+pub fn get_time_ms() -> usize {
     let stable_counter_freq = Cpucfg::get_sc_freq();
     get_time() * 1_000 / stable_counter_freq
 }
 
-pub unsafe fn get_time_us() -> usize {
+pub fn get_time_us() -> usize {
     let stable_counter_freq = Cpucfg::get_sc_freq();
     get_time() * 1_000_000 / stable_counter_freq
 }
 
-pub unsafe fn get_time() -> usize {
-    _rdtime().0
+pub fn get_time() -> usize {
+    unsafe { _rdtime().0 }
 }
 
 unsafe fn _rdtime() -> (usize, usize) {
