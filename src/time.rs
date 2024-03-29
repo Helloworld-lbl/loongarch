@@ -7,12 +7,17 @@ pub unsafe fn init_trigger(ticks_per_sec: usize) {
     tcfg.init_trigger(trigger_freq);
 }
 
-pub unsafe fn read_sec() -> usize {
+pub unsafe fn get_time_s() -> usize {
     let stable_counter_freq = Cpucfg::get_sc_freq();
     get_time() / stable_counter_freq
 }
 
-pub unsafe fn read_usec() -> usize {
+pub unsafe fn get_time_ms() -> usize {
+    let stable_counter_freq = Cpucfg::get_sc_freq();
+    get_time() * 1_000 / stable_counter_freq
+}
+
+pub unsafe fn get_time_us() -> usize {
     let stable_counter_freq = Cpucfg::get_sc_freq();
     get_time() * 1_000_000 / stable_counter_freq
 }
