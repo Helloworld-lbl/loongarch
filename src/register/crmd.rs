@@ -55,4 +55,26 @@ impl Crmd {
     pub fn we(&self) -> bool {
         self.bits.get_bit(9)
     }
+
+    #[inline]
+    pub fn set_da(&mut self, value: bool) {
+        self.bits.set_bit(3, value);
+    }
+
+    #[inline]
+    pub fn set_pg(&mut self, value: bool) {
+        self.bits.set_bit(4, value);
+    }
+
+    #[inline]
+    pub fn enable_da(&mut self) {
+        self.set_da(true);
+        self.set_pg(false);
+    }
+
+    #[inline]
+    pub fn enable_pg(&mut self) {
+        self.set_da(false);
+        self.set_pg(true);
+    }
 }

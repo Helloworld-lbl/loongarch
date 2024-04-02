@@ -8,3 +8,5 @@ pub mod prmd;
 pub mod tcfg;
 pub mod cpucfg;
 pub mod ticlr;
+pub mod pgdl;
+pub mod pgdh;
