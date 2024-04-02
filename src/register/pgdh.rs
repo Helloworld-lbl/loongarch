@@ -16,4 +16,14 @@ impl Pgdh {
     pub fn set_base(&mut self, value: usize) {
         self.bits.set_bits(12.., value >> 12);
     }
+
+    #[inline]
+    pub fn write(self) {
+        unsafe {
+            _write(self.bits);
+        }
+    }
 }
+
+read_csr_as!(Pgdh, 0x1a, __read_pgdh);
+write_csr!(0x1a, __write_pgdh);

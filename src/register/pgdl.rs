@@ -16,4 +16,14 @@ impl Pgdl {
     pub fn set_base(&mut self, value: usize) {
         self.bits.set_bits(12.., value >> 12);
     }
+
+    #[inline]
+    pub fn write(self) {
+        unsafe {
+            _write(self.bits);
+        }
+    }
 }
+
+read_csr_as!(Pgdl, 0x19, __read_pgdl);
+write_csr!(0x19, __write_pgdl);

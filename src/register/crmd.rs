@@ -76,5 +76,16 @@ impl Crmd {
     pub fn enable_pg(&mut self) {
         self.set_da(false);
         self.set_pg(true);
+        self.write();
+    }
+
+    #[inline]
+    pub fn write(self) {
+        unsafe {
+            _write(self.bits);
+        }
     }
 }
+
+read_csr_as!(Crmd, 0x0, __read_crmd);
+write_csr!(0x0, __write_crmd);
