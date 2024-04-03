@@ -10,3 +10,6 @@ pub mod cpucfg;
 pub mod ticlr;
 pub mod pgdl;
 pub mod pgdh;
+pub mod pwcl;
+pub mod pwch;
+pub mod stlbps;
