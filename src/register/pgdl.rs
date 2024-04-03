@@ -14,7 +14,13 @@ impl Pgdl {
 
     #[inline]
     pub fn set_base(&mut self, value: usize) {
-        self.bits.set_bits(12.., value >> 12);
+        self.bits.set_bits(12.., value);
+    }
+
+    #[inline]
+    pub fn write_base_pa(&mut self, pa: usize) {
+        self.set_base(pa >> 12);
+        self.write();
     }
 
     #[inline]
@@ -27,3 +33,8 @@ impl Pgdl {
 
 read_csr_as!(Pgdl, 0x19, __read_pgdl);
 write_csr!(0x19, __write_pgdl);
+
+pub fn write_pa_to_pgdl(pa: usize) {
+    let mut pgdl = read();
+    pgdl.write_base_pa(pa);
+}

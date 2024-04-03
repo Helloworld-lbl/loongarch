@@ -13,3 +13,4 @@ pub mod pgdh;
 pub mod pwcl;
 pub mod pwch;
 pub mod stlbps;
+pub mod tlbrentry;

@@ -14,7 +14,13 @@ impl Pgdh {
 
     #[inline]
     pub fn set_base(&mut self, value: usize) {
-        self.bits.set_bits(12.., value >> 12);
+        self.bits.set_bits(12.., value);
+    }
+
+    #[inline]
+    pub fn write_base_pa(&mut self, pa: usize) {
+        self.set_base(pa >> 12);
+        self.write();
     }
 
     #[inline]
@@ -27,3 +33,8 @@ impl Pgdh {
 
 read_csr_as!(Pgdh, 0x1a, __read_pgdh);
 write_csr!(0x1a, __write_pgdh);
+
+pub fn write_pa_to_pgdh(pa: usize) {
+    let mut pgdh = read();
+    pgdh.write_base_pa(pa);
+}
