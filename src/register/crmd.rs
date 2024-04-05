@@ -57,6 +57,11 @@ impl Crmd {
     }
 
     #[inline]
+    pub fn set_ie(&mut self, value: bool) {
+        self.bits.set_bit(2, value);
+    }
+
+    #[inline]
     pub fn set_da(&mut self, value: bool) {
         self.bits.set_bit(3, value);
     }
