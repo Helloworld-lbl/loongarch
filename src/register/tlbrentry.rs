@@ -8,6 +8,11 @@ pub struct Tlbrentry {
 
 impl Tlbrentry {
     #[inline]
+    pub fn bits(&self) -> usize {
+        self.bits
+    }
+    
+    #[inline]
     pub fn ppn(&self) -> usize {
         self.bits.get_bits(12..)
     }

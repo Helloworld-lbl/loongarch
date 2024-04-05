@@ -8,6 +8,11 @@ pub struct Pwch {
 
 impl Pwch {
     #[inline]
+    pub fn bits(&self) -> usize {
+        self.bits
+    }
+    
+    #[inline]
     pub fn dir3_base(&self) -> usize {
         self.bits.get_bits(0..6)
     }

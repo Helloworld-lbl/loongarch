@@ -8,6 +8,11 @@ pub struct Pwcl {
 
 impl Pwcl {
     #[inline]
+    pub fn bits(&self) -> usize {
+        self.bits
+    }
+    
+    #[inline]
     pub fn ptbase(&self) -> usize {
         self.bits.get_bits(0..5)
     }

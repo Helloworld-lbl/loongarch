@@ -8,6 +8,11 @@ pub struct Tcfg {
 }
 
 impl Tcfg {
+    #[inline]
+    pub fn bits(&self) -> usize {
+        self.bits
+    }
+    
     // 0
     // En
     // RW

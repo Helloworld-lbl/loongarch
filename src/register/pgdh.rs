@@ -8,6 +8,11 @@ pub struct Pgdh {
 
 impl Pgdh {
     #[inline]
+    pub fn bits(&self) -> usize {
+        self.bits
+    }
+    
+    #[inline]
     pub fn base(self) -> usize {
         self.bits.get_bits(12..)
     }

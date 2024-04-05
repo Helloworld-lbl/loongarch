@@ -7,6 +7,11 @@ pub struct Ticlr {
 
 impl Ticlr {
     #[inline]
+    pub fn bits(&self) -> usize {
+        self.bits
+    }
+    
+    #[inline]
     pub fn set_clr(&mut self) {
         self.bits.set_bit(0, true);
     }

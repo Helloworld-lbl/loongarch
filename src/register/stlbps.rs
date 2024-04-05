@@ -8,6 +8,11 @@ pub struct Stlbps {
 
 impl Stlbps {
     #[inline]
+    pub fn bits(&self) -> usize {
+        self.bits
+    }
+    
+    #[inline]
     pub fn ps(&self) -> usize {
         self.bits.get_bits(0..6)
     }
