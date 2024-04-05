@@ -11,7 +11,7 @@ impl Tlbrentry {
     pub fn bits(&self) -> usize {
         self.bits
     }
-    
+
     #[inline]
     pub fn ppn(&self) -> usize {
         self.bits.get_bits(12..)
@@ -36,8 +36,8 @@ impl Tlbrentry {
     }
 }
 
-read_csr_as!(Tlbrentry, 0x1c, __read_tlbrentry);
-write_csr!(0x1c, __write_tlbrentry);
+read_csr_as!(Tlbrentry, 0x88, __read_tlbrentry);
+write_csr!(0x88, __write_tlbrentry);
 
 pub fn write_pa_to_tlbrentry(pa: usize) {
     let mut tlbrentry = read();
