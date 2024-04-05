@@ -6,7 +6,7 @@ pub struct Tlbrehi {
     bits: usize,
 }
 
-impl Tlbrentry {
+impl Tlbrehi {
     #[inline]
     pub fn bits(&self) -> usize {
         self.bits
@@ -23,8 +23,8 @@ impl Tlbrentry {
     }
 
     #[inline]
-    pub fn write_ps(&mut self, pa: usize) {
-        self.set_ps(pa);
+    pub fn write_ps(&mut self, ps: usize) {
+        self.set_ps(ps);
         self.write();
     }
 
@@ -39,7 +39,7 @@ impl Tlbrentry {
 read_csr_as!(Tlbrehi, 0x8e, __read_tlbrehi);
 write_csr!(0x8e, __write_tlbrehi);
 
-pub fn write_ps_to_tlbrehi(pa: usize) {
+pub fn write_ps_to_tlbrehi(ps: usize) {
     let mut tlbrehi = read();
-    tlbrehi.write_pa(pa);
+    tlbrehi.write_ps(ps);
 }
