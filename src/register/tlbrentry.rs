@@ -24,7 +24,7 @@ impl Tlbrentry {
 
     #[inline]
     pub fn write_pa(&mut self, pa: usize) {
-        self.set_ppn(pa >> 12);
+        self.bits.set_bits(.., pa);
         self.write();
     }
 
