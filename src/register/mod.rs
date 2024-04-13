@@ -15,3 +15,4 @@ pub mod pwch;
 pub mod stlbps;
 pub mod tlbrentry;
 pub mod tlbrehi;
+pub mod badv;
