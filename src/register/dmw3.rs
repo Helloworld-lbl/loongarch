@@ -43,33 +43,33 @@ impl Dmw3 {
     }
 
     #[inline]
-    pub fn set_plv0(&self, value: bool) {
-        self.bits.set_bit(0, value)
+    pub fn set_plv0(&mut self, value: bool) {
+        self.bits.set_bit(0, value);
     }
 
     #[inline]
-    pub fn set_plv1(&self, value: bool) {
-        self.bits.set_bit(1, value)
+    pub fn set_plv1(&mut self, value: bool) {
+        self.bits.set_bit(1, value);
     }
 
     #[inline]
-    pub fn set_plv2(&self, value: bool) {
-        self.bits.set_bit(2, value)
+    pub fn set_plv2(&mut self, value: bool) {
+        self.bits.set_bit(2, value);
     }
 
     #[inline]
-    pub fn set_plv3(&self, value: bool) {
-        self.bits.set_bit(3, value)
+    pub fn set_plv3(&mut self, value: bool) {
+        self.bits.set_bit(3, value);
     }
 
     #[inline]
-    pub fn set_mat(&self, value: usize) {
-        self.bits.set_bits(4..6, value)
+    pub fn set_mat(&mut self, value: usize) {
+        self.bits.set_bits(4..6, value);
     }
 
     #[inline]
-    pub fn set_vseg(&self, value: usize) {
-        self.bits.set_bits(60.., value)
+    pub fn set_vseg(&mut self, value: usize) {
+        self.bits.set_bits(60.., value);
     }
 
     #[inline]
