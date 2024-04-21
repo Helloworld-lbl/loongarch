@@ -16,3 +16,7 @@ pub mod stlbps;
 pub mod tlbrentry;
 pub mod tlbrehi;
 pub mod badv;
+pub mod dmw0;
+pub mod dmw1;
+pub mod dmw2;
+pub mod dmw3;
